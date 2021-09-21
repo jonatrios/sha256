@@ -18,8 +18,14 @@ h_bit_list = [num_to_bit(h,32) for h in h_list]
 
 
 class SHA256():
+
     def __init__(self, msg=''.encode()) -> None:
         self.msg : bytes = msg
+        if isinstance(msg, bytes) == False:
+            raise TypeError('Unicode-objects must be encoded before hashing')
+    
+    def update(self, msg : bytes) -> None:
+        self.msg = msg + self.msg
         if isinstance(msg, bytes) == False:
             raise TypeError('Unicode-objects must be encoded before hashing')
     
@@ -114,5 +120,5 @@ class SHA256():
             if len(hex_str_list[i]) < 8:
                 hex_str_list[i] = '0' + hex_str_list[i]
             hex_concat = hex_concat + hex_str_list[i]
-        
+
         return hex_concat
